@@ -1,0 +1,1963 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presente ritualístico pro Diogão</title>
+    <style>
+      :root {
+        --bg: #060608;
+        --panel: rgba(255, 255, 255, 0.05);
+        --panel-2: rgba(255, 255, 255, 0.03);
+        --border: rgba(255, 255, 255, 0.1);
+        --muted: rgba(255, 255, 255, 0.58);
+        --soft: rgba(255, 255, 255, 0.38);
+        --text: rgba(255, 255, 255, 0.92);
+        --ok: #86efac;
+        --ok-bg: rgba(16, 185, 129, 0.12);
+        --error: #fecaca;
+        --error-bg: rgba(239, 68, 68, 0.12);
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.38);
+        --radius-xl: 32px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+        --max: 1280px;
+        color-scheme: dark;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        min-height: 100%;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(
+            circle at center,
+            rgba(255, 240, 210, 0.08),
+            transparent 18%
+          ),
+          radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 40, 40, 0.08),
+            transparent 15%
+          ),
+          radial-gradient(
+            circle at 80% 30%,
+            rgba(120, 220, 255, 0.06),
+            transparent 15%
+          ),
+          radial-gradient(
+            circle at 50% 80%,
+            rgba(255, 220, 130, 0.05),
+            transparent 20%
+          ),
+          linear-gradient(180deg, #060608 0%, #07080c 100%);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.18;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(
+          circle at center,
+          black 35%,
+          transparent 80%
+        );
+      }
+
+      .stars,
+      .stars::before,
+      .stars::after {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        content: "";
+        background-repeat: repeat;
+        background-size: 340px 340px;
+        opacity: 0.32;
+        animation: drift 30s linear infinite;
+      }
+      .stars {
+        background-image:
+          radial-gradient(
+            circle at 40px 40px,
+            rgba(255, 255, 255, 0.75) 0 1.2px,
+            transparent 1.4px
+          ),
+          radial-gradient(
+            circle at 180px 120px,
+            rgba(255, 255, 255, 0.55) 0 1.1px,
+            transparent 1.3px
+          ),
+          radial-gradient(
+            circle at 280px 80px,
+            rgba(255, 255, 255, 0.45) 0 1px,
+            transparent 1.2px
+          ),
+          radial-gradient(
+            circle at 120px 260px,
+            rgba(255, 255, 255, 0.5) 0 1.1px,
+            transparent 1.4px
+          );
+      }
+      .stars::before {
+        background-image:
+          radial-gradient(
+            circle at 70px 90px,
+            rgba(255, 255, 255, 0.48) 0 1px,
+            transparent 1.3px
+          ),
+          radial-gradient(
+            circle at 220px 180px,
+            rgba(255, 255, 255, 0.55) 0 1.1px,
+            transparent 1.4px
+          ),
+          radial-gradient(
+            circle at 300px 280px,
+            rgba(255, 255, 255, 0.38) 0 1px,
+            transparent 1.3px
+          );
+        animation-duration: 40s;
+        opacity: 0.22;
+      }
+      .stars::after {
+        background-image:
+          radial-gradient(
+            circle at 150px 50px,
+            rgba(255, 255, 255, 0.46) 0 1px,
+            transparent 1.2px
+          ),
+          radial-gradient(
+            circle at 40px 300px,
+            rgba(255, 255, 255, 0.65) 0 1.15px,
+            transparent 1.35px
+          ),
+          radial-gradient(
+            circle at 260px 230px,
+            rgba(255, 255, 255, 0.4) 0 1px,
+            transparent 1.3px
+          );
+        animation-duration: 50s;
+        opacity: 0.18;
+      }
+
+      .app {
+        position: relative;
+        width: min(var(--max), calc(100% - 24px));
+        margin: 0 auto;
+        padding: 16px 0 32px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        padding: 10px 14px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.32em;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.52);
+        backdrop-filter: blur(12px);
+      }
+
+      .layout-top {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        gap: 24px;
+        margin-top: 18px;
+      }
+
+      .panel {
+        position: relative;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        backdrop-filter: blur(18px);
+        box-shadow: var(--shadow);
+      }
+
+      .panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          transparent 24%
+        );
+      }
+
+      .panel-line {
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(239, 68, 68, 0.45),
+          rgba(255, 255, 255, 0.32),
+          rgba(252, 211, 77, 0.45)
+        );
+      }
+
+      .panel-inner {
+        padding: 22px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .intro-text {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--muted);
+        max-width: 760px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .stat {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: rgba(0, 0, 0, 0.28);
+        padding: 16px;
+        min-height: 118px;
+      }
+
+      .stat-label {
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .stat-value {
+        margin-top: 10px;
+        font-size: clamp(28px, 4vw, 48px);
+        font-weight: 900;
+        line-height: 1;
+      }
+
+      .stat-text {
+        margin-top: 10px;
+        font-size: 14px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .progress {
+        width: 100%;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+        margin-top: 14px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: inherit;
+        background: linear-gradient(
+          90deg,
+          rgba(239, 68, 68, 0.8),
+          rgba(255, 255, 255, 0.9),
+          rgba(250, 204, 21, 0.8)
+        );
+        box-shadow: 0 0 24px rgba(255, 255, 255, 0.22);
+        transition: width 0.35s ease;
+      }
+
+      .section-title {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 800;
+      }
+
+      .section-sub {
+        margin: 8px 0 0;
+        font-size: 14px;
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      .ritual-wrap {
+        padding: 18px 14px 18px;
+      }
+
+      .ritual-board {
+        position: relative;
+        width: min(100%, 680px);
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
+      }
+
+      .ring,
+      .ring-rev,
+      .ring-mid {
+        position: absolute;
+        inset: 8%;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        animation: spin 90s linear infinite;
+      }
+      .ring-rev {
+        inset: 18%;
+        animation-direction: reverse;
+        animation-duration: 75s;
+      }
+      .ring-mid {
+        inset: 29%;
+        animation-duration: 55s;
+      }
+
+      .ritual-line {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        transform-origin: center;
+      }
+      .ritual-line.h {
+        width: 72%;
+        height: 2px;
+        transform: translate(-50%, -50%);
+      }
+      .ritual-line.v {
+        width: 2px;
+        height: 72%;
+        transform: translate(-50%, -50%);
+      }
+      .ritual-line.d1 {
+        width: 2px;
+        height: 72%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      .ritual-line.d2 {
+        width: 2px;
+        height: 72%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+
+      .ritual-core {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 34%;
+        height: 34%;
+        min-width: 132px;
+        min-height: 132px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(0, 0, 0, 0.56);
+        backdrop-filter: blur(14px);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 18px;
+        animation: pulseGlow 3.6s ease-in-out infinite;
+        overflow: hidden;
+      }
+
+      .ritual-core::before {
+        content: "";
+        position: absolute;
+        inset: 6%;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        animation: spin 22s linear infinite reverse;
+      }
+
+      .core-kicker {
+        position: relative;
+        z-index: 1;
+        text-transform: uppercase;
+        letter-spacing: 0.36em;
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      .core-value {
+        position: relative;
+        z-index: 1;
+        margin-top: 8px;
+        font-size: clamp(32px, 5vw, 62px);
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .core-sub {
+        position: relative;
+        z-index: 1;
+        margin-top: 10px;
+        font-size: 11px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.56);
+        max-width: 170px;
+      }
+
+      .ritual-node {
+        position: absolute;
+        left: var(--x);
+        top: var(--y);
+        transform: translate(-50%, -50%);
+        width: 138px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+      }
+
+      .node-orb {
+        position: relative;
+        width: 108px;
+        height: 108px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(0, 0, 0, 0.34);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0.08);
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease,
+          opacity 0.25s ease;
+        backdrop-filter: blur(12px);
+      }
+
+      .node-orb::before,
+      .node-orb::after {
+        content: "";
+        position: absolute;
+        inset: 18%;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        pointer-events: none;
+      }
+
+      .node-orb::after {
+        inset: 32%;
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .node-sigil {
+        position: absolute;
+        font-size: 40px;
+        color: rgba(255, 255, 255, 0.18);
+        line-height: 1;
+      }
+
+      .node-icon {
+        position: relative;
+        z-index: 2;
+        width: 32px;
+        height: 32px;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .node-fragment,
+      .node-label {
+        font-size: 12px;
+        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.72);
+        max-width: 138px;
+      }
+
+      .node-universe {
+        display: none;
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.42);
+      }
+
+      .node-ok {
+        position: absolute;
+        right: -2px;
+        top: -2px;
+        padding: 5px 8px;
+        border-radius: 999px;
+        font-size: 8px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(209, 250, 229, 0.95);
+        background: rgba(16, 185, 129, 0.16);
+        border: 1px solid rgba(110, 231, 183, 0.18);
+        display: none;
+        z-index: 3;
+      }
+
+      .ritual-node.solved .node-ok {
+        display: block;
+      }
+      .ritual-node.solved .node-orb {
+        border-color: rgba(255, 255, 255, 0.24);
+        transform: scale(1.03);
+        animation: nodeSolved 2.8s ease-in-out infinite;
+      }
+
+      .echoes {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 10px;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(12px);
+        padding: 12px 14px;
+        text-align: center;
+        display: none;
+      }
+
+      .echoes.visible {
+        display: block;
+      }
+
+      .echoes-title {
+        text-transform: uppercase;
+        letter-spacing: 0.35em;
+        font-size: 8px;
+        color: rgba(255, 255, 255, 0.42);
+      }
+
+      .echoes-text {
+        margin-top: 8px;
+        font-size: 12px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .mini-strip {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        margin: 18px 0 20px;
+      }
+
+      .mini-card {
+        position: relative;
+        border-radius: 22px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+        padding: 14px;
+        min-height: 96px;
+        box-shadow: var(--shadow);
+      }
+
+      .mini-bg,
+      .card-bg {
+        position: absolute;
+        inset: 0;
+        opacity: 0.85;
+        pointer-events: none;
+      }
+
+      .mini-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .mini-icon {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.32);
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+      }
+
+      .mini-icon svg {
+        width: 18px;
+        height: 18px;
+        color: rgba(255, 255, 255, 0.92);
+        position: relative;
+        z-index: 1;
+      }
+      .mini-icon span {
+        position: absolute;
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.18);
+        line-height: 1;
+      }
+
+      .mini-kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.42);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .mini-text {
+        margin-top: 5px;
+        font-size: 12px;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .puzzle-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        position: relative;
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.36);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+        min-height: 100%;
+      }
+
+      .card.locked {
+        opacity: 0.56;
+      }
+
+      .card-header,
+      .card-content {
+        position: relative;
+        z-index: 1;
+        padding: 22px;
+      }
+
+      .card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding-bottom: 12px;
+      }
+
+      .card-kicker {
+        text-transform: uppercase;
+        letter-spacing: 0.34em;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 10px;
+      }
+
+      .card-title {
+        margin: 0;
+        font-size: clamp(22px, 2.8vw, 30px);
+        line-height: 1.2;
+        font-weight: 800;
+      }
+
+      .card-sub {
+        margin: 8px 0 0;
+        font-size: 14px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .card-icon-wrap {
+        position: relative;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.34);
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        box-shadow: 0 0 34px rgba(255, 255, 255, 0.09);
+      }
+
+      .card-icon-wrap span {
+        position: absolute;
+        font-size: 28px;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.15);
+      }
+
+      .card-icon-wrap svg {
+        width: 22px;
+        height: 22px;
+        color: rgba(255, 255, 255, 0.88);
+        position: relative;
+        z-index: 1;
+      }
+
+      .clue {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 26px;
+        padding: 16px;
+        font-size: 14px;
+        line-height: 2;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .lock-msg,
+      .hint-box,
+      .solved-box,
+      .error-box {
+        border-radius: 22px;
+        padding: 14px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .lock-msg {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(0, 0, 0, 0.28);
+        color: rgba(255, 255, 255, 0.52);
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .answer-row {
+        display: flex;
+        gap: 12px;
+      }
+
+      .input {
+        width: 100%;
+        min-width: 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 18px;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        padding: 14px 16px;
+        font-size: 14px;
+        outline: none;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .input:focus {
+        border-color: rgba(255, 255, 255, 0.24);
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+      }
+
+      .btn {
+        appearance: none;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        color: white;
+        padding: 14px 18px;
+        border-radius: 18px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          background 0.15s ease,
+          border-color 0.15s ease;
+        white-space: nowrap;
+      }
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .btn:active {
+        transform: translateY(1px) scale(0.995);
+      }
+      .btn.primary {
+        background: rgba(255, 255, 255, 0.95);
+        color: black;
+        border-color: rgba(255, 255, 255, 0.95);
+      }
+      .btn.primary:hover {
+        background: rgba(255, 255, 255, 0.88);
+      }
+      .btn.full {
+        width: 100%;
+      }
+
+      .hint-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .hint-box {
+        background: rgba(0, 0, 0, 0.28);
+        color: rgba(255, 255, 255, 0.76);
+        display: none;
+      }
+      .hint-box.visible {
+        display: block;
+      }
+
+      .solved-box {
+        border-color: rgba(110, 231, 183, 0.18);
+        background: var(--ok-bg);
+        display: none;
+      }
+      .solved-box.visible {
+        display: block;
+      }
+
+      .solved-kicker {
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: rgba(209, 250, 229, 0.88);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .solved-fragment {
+        margin-top: 12px;
+        border-radius: 18px;
+        border: 1px solid rgba(110, 231, 183, 0.12);
+        background: rgba(0, 0, 0, 0.22);
+        padding: 14px;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
+      .error-box {
+        display: none;
+        border-color: rgba(248, 113, 113, 0.18);
+        background: var(--error-bg);
+        color: var(--error);
+      }
+      .error-box.visible {
+        display: block;
+      }
+
+      .footer-actions {
+        margin-top: 22px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.86);
+        backdrop-filter: blur(14px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+        z-index: 100;
+        overflow-y: auto;
+      }
+      .overlay.visible {
+        display: flex;
+      }
+
+      .overlay-ritual {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(92vw, 960px);
+        aspect-ratio: 1 / 1;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .overlay-ritual .or-ring,
+      .overlay-ritual .or-ring-2,
+      .overlay-ritual .or-ring-3 {
+        position: absolute;
+        border-radius: 50%;
+        inset: 6%;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        animation: spin 16s linear infinite;
+      }
+      .overlay-ritual .or-ring-2 {
+        inset: 16%;
+        border-color: rgba(217, 70, 239, 0.18);
+        animation-duration: 12s;
+        animation-direction: reverse;
+      }
+      .overlay-ritual .or-ring-3 {
+        inset: 28%;
+        border-color: rgba(248, 113, 113, 0.18);
+        animation-duration: 9s;
+      }
+
+      .overlay-ritual .burst {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+        transform: translate(-50%, -50%);
+        animation: burst 1.4s ease-out forwards;
+        opacity: 0;
+      }
+
+      .overlay-card {
+        position: relative;
+        z-index: 2;
+        width: min(100%, 860px);
+        border-radius: 34px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(10, 10, 15, 0.96);
+        overflow: hidden;
+        box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55);
+        transform: scale(0.96) translateY(18px);
+        opacity: 0;
+        transition:
+          transform 0.45s ease,
+          opacity 0.45s ease;
+      }
+
+      .overlay.visible .overlay-card {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+
+      .overlay-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          rgba(217, 70, 239, 0.4),
+          rgba(255, 255, 255, 0.35),
+          rgba(239, 68, 68, 0.4)
+        );
+      }
+
+      .overlay-inner {
+        position: relative;
+        padding: 20px;
+      }
+
+      .overlay-kicker {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.72);
+        text-transform: uppercase;
+        letter-spacing: 0.34em;
+        font-size: 10px;
+      }
+
+      .overlay-title {
+        margin: 18px 0 0;
+        font-size: clamp(28px, 4vw, 48px);
+        line-height: 1.1;
+        font-weight: 900;
+      }
+
+      .message-box {
+        position: relative;
+        margin-top: 22px;
+        border-radius: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 18px;
+        overflow: hidden;
+      }
+
+      .message-box::before,
+      .message-box::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        width: 120%;
+        height: 120%;
+        transform: translate(-50%, -50%);
+        animation: spin 28s linear infinite reverse;
+      }
+
+      .message-box::after {
+        width: 88%;
+        height: 88%;
+        animation-duration: 18s;
+        animation-direction: normal;
+      }
+
+      .message-lines {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-size: clamp(16px, 2.1vw, 24px);
+        line-height: 1.8;
+        color: rgba(255, 255, 255, 0.88);
+      }
+
+      .message-line {
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(10px);
+        animation: lineIn 0.35s ease forwards;
+        white-space: pre-wrap;
+      }
+
+      .message-line.spacer {
+        min-height: 8px;
+      }
+
+      .ritual-symbol {
+        display: inline-flex;
+        width: 16px;
+        height: 16px;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      .card.theme-edm .mini-bg,
+      .card.theme-edm .card-bg,
+      .ritual-node.theme-edm .node-orb,
+      .mini-card.theme-edm .mini-bg {
+        background:
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(125, 211, 252, 0.14),
+            transparent 56%
+          ),
+          linear-gradient(135deg, rgba(34, 211, 238, 0.09), transparent),
+          linear-gradient(
+            135deg,
+            rgba(56, 189, 248, 0.35),
+            rgba(56, 189, 248, 0.05)
+          );
+      }
+      .card.theme-hk .mini-bg,
+      .card.theme-hk .card-bg,
+      .ritual-node.theme-hk .node-orb,
+      .mini-card.theme-hk .mini-bg {
+        background:
+          radial-gradient(
+            circle at 50% 40%,
+            rgba(255, 255, 255, 0.08),
+            transparent 42%
+          ),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 45%),
+          linear-gradient(
+            135deg,
+            rgba(226, 232, 240, 0.3),
+            rgba(255, 255, 255, 0.04)
+          );
+      }
+      .card.theme-nm .mini-bg,
+      .card.theme-nm .card-bg,
+      .ritual-node.theme-nm .node-orb,
+      .mini-card.theme-nm .mini-bg {
+        background:
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(248, 113, 113, 0.12),
+            transparent 50%
+          ),
+          linear-gradient(135deg, rgba(220, 38, 38, 0.1), transparent),
+          linear-gradient(
+            135deg,
+            rgba(239, 68, 68, 0.32),
+            rgba(239, 68, 68, 0.04)
+          );
+      }
+      .card.theme-op .mini-bg,
+      .card.theme-op .card-bg,
+      .ritual-node.theme-op .node-orb,
+      .mini-card.theme-op .mini-bg {
+        background:
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(253, 224, 71, 0.12),
+            transparent 52%
+          ),
+          linear-gradient(45deg, rgba(251, 191, 36, 0.08), transparent),
+          linear-gradient(
+            135deg,
+            rgba(252, 211, 77, 0.32),
+            rgba(252, 211, 77, 0.04)
+          );
+      }
+      .card.theme-us .mini-bg,
+      .card.theme-us .card-bg,
+      .ritual-node.theme-us .node-orb,
+      .mini-card.theme-us .mini-bg {
+        background:
+          radial-gradient(
+            circle at 50% 50%,
+            rgba(244, 114, 182, 0.12),
+            transparent 54%
+          ),
+          linear-gradient(135deg, rgba(217, 70, 239, 0.08), transparent),
+          linear-gradient(
+            135deg,
+            rgba(217, 70, 239, 0.32),
+            rgba(217, 70, 239, 0.04)
+          );
+      }
+
+      .theme-edm .node-orb {
+        box-shadow: 0 0 40px rgba(56, 189, 248, 0.18);
+      }
+      .theme-hk .node-orb {
+        box-shadow: 0 0 38px rgba(226, 232, 240, 0.12);
+      }
+      .theme-nm .node-orb {
+        box-shadow: 0 0 42px rgba(239, 68, 68, 0.18);
+      }
+      .theme-op .node-orb {
+        box-shadow: 0 0 40px rgba(252, 211, 77, 0.18);
+      }
+      .theme-us .node-orb {
+        box-shadow: 0 0 42px rgba(217, 70, 239, 0.18);
+      }
+
+      .theme-hk .node-orb::before {
+        inset: 12%;
+      }
+      .theme-hk .node-orb::after {
+        inset: 22%;
+        border-color: rgba(255, 255, 255, 0.06);
+      }
+      .theme-nm .node-orb::before,
+      .theme-nm .node-orb::after {
+        inset: 16%;
+        border-radius: 24%;
+        transform: rotate(45deg);
+        border-color: rgba(248, 113, 113, 0.15);
+      }
+      .theme-nm .node-orb::after {
+        inset: 30%;
+        border-color: rgba(248, 113, 113, 0.1);
+      }
+      .theme-op .node-orb::before,
+      .theme-op .node-orb::after {
+        inset: 18%;
+        border-radius: 28%;
+        transform: rotate(45deg);
+        border-color: rgba(252, 211, 77, 0.15);
+      }
+      .theme-op .node-orb::after {
+        inset: 34%;
+        border-color: rgba(252, 211, 77, 0.1);
+      }
+      .theme-us .node-orb::before {
+        inset: 10%;
+      }
+      .theme-us .node-orb::after {
+        inset: 24%;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes drift {
+        from {
+          transform: translateY(0px);
+        }
+        to {
+          transform: translateY(-24px);
+        }
+      }
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 0 rgba(255, 255, 255, 0.05);
+        }
+        50% {
+          box-shadow: 0 0 35px rgba(255, 255, 255, 0.08);
+        }
+      }
+      @keyframes nodeSolved {
+        0%,
+        100% {
+          transform: scale(1.03) rotate(0deg);
+        }
+        25% {
+          transform: scale(1.05) rotate(6deg);
+        }
+        75% {
+          transform: scale(1.05) rotate(-6deg);
+        }
+      }
+      @keyframes lineIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+        }
+      }
+      @keyframes burst {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.3);
+        }
+        35% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.25;
+          transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
+            scale(1);
+        }
+      }
+
+      @media (max-width: 1180px) {
+        .layout-top {
+          grid-template-columns: 1fr;
+        }
+        .puzzle-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .mini-strip {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .node-universe {
+          display: block;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .app {
+          width: min(var(--max), calc(100% - 18px));
+        }
+        .panel-inner,
+        .card-header,
+        .card-content,
+        .overlay-inner {
+          padding: 18px;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+        }
+        .puzzle-grid {
+          grid-template-columns: 1fr;
+        }
+        .mini-strip {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .answer-row {
+          flex-direction: column;
+        }
+        .ritual-node {
+          width: 102px;
+          gap: 8px;
+        }
+        .node-orb {
+          width: 82px;
+          height: 82px;
+        }
+        .node-sigil {
+          font-size: 30px;
+        }
+        .node-icon {
+          width: 24px;
+          height: 24px;
+        }
+        .node-fragment,
+        .node-label {
+          max-width: 100px;
+          font-size: 10px;
+          line-height: 1.35;
+        }
+        .core-kicker {
+          font-size: 8px;
+        }
+        .core-sub {
+          font-size: 10px;
+        }
+        .echoes {
+          left: 8px;
+          right: 8px;
+          bottom: 6px;
+          padding: 10px 12px;
+        }
+        .overlay-card {
+          border-radius: 28px;
+        }
+        .message-box {
+          border-radius: 26px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .badge {
+          font-size: 9px;
+          padding: 9px 12px;
+        }
+        .panel-inner,
+        .card-header,
+        .card-content {
+          padding: 16px;
+        }
+        .section-title {
+          font-size: 18px;
+        }
+        .section-sub,
+        .intro-text,
+        .card-sub,
+        .clue,
+        .stat-text {
+          font-size: 13px;
+        }
+        .mini-strip {
+          grid-template-columns: 1fr;
+        }
+        .ritual-wrap {
+          padding: 12px 8px 14px;
+        }
+        .ritual-board {
+          width: 100%;
+        }
+        .ritual-node {
+          width: 88px;
+        }
+        .node-orb {
+          width: 72px;
+          height: 72px;
+        }
+        .node-icon {
+          width: 22px;
+          height: 22px;
+        }
+        .node-sigil {
+          font-size: 24px;
+        }
+        .node-fragment,
+        .node-label {
+          max-width: 86px;
+          font-size: 9px;
+        }
+        .ritual-core {
+          min-width: 112px;
+          min-height: 112px;
+          padding: 12px;
+        }
+        .core-sub {
+          max-width: 110px;
+          line-height: 1.5;
+        }
+        .echoes-text {
+          font-size: 11px;
+          line-height: 1.6;
+        }
+        .overlay-inner {
+          padding: 16px;
+        }
+        .message-box {
+          padding: 16px;
+        }
+        .footer-actions .btn,
+        .overlay-inner .btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stars"></div>
+    <div class="app">
+      <div class="badge">
+        <span class="ritual-symbol">✶</span>
+        <span>presente ritualístico pro diogão</span>
+      </div>
+
+      <section class="layout-top">
+        <div class="panel">
+          <div class="panel-line"></div>
+          <div class="panel-inner">
+            <p class="intro-text">
+              Eu escondi teu texto de aniversário dentro de um ritual. Cada
+              resposta certa encaixa num símbolo, fecha um selo e puxa um
+              fragmento do que eu queria te dizer. Então sim: pra ler tua
+              mensagem, tu vai ter que sofrer um pouco primeiro.
+            </p>
+
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-label">selos</div>
+                <div class="stat-value" id="solvedCounter">0/5</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">ritual</div>
+                <div class="stat-text">
+                  Enigma do Medo, Hollow Knight, Natal Macabro, Ordem e a nossa
+                  própria memória.
+                </div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">progresso</div>
+                <div class="progress">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-inner">
+            <h2 class="section-title">Círculo do ritual</h2>
+            <p class="section-sub">
+              Cada universo tem um visual próprio dentro do círculo. Quando os
+              cinco fecharem, a mensagem explode no centro.
+            </p>
+            <div class="ritual-wrap">
+              <div class="ritual-board" id="ritualBoard"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mini-strip" id="miniStrip"></section>
+
+      <section class="puzzle-grid" id="puzzleGrid"></section>
+
+      <div class="footer-actions">
+        <button class="btn" id="resetBtn">reiniciar ritual</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="finalOverlay" aria-hidden="true">
+      <div class="overlay-ritual" id="overlayRitual">
+        <div class="or-ring"></div>
+        <div class="or-ring-2"></div>
+        <div class="or-ring-3"></div>
+      </div>
+
+      <div class="overlay-card">
+        <div class="overlay-inner">
+          <div class="overlay-kicker">
+            <span class="ritual-symbol">✦</span>
+            <span>mensagem liberada</span>
+          </div>
+          <h2 class="overlay-title">Agora sim, sem selo nenhum no caminho</h2>
+
+          <div class="message-box">
+            <div class="message-lines" id="messageLines"></div>
+          </div>
+
+          <div class="footer-actions" style="margin-top: 18px">
+            <button class="btn primary" id="overlayResetBtn">
+              fazer tu resolver tudo de novo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const puzzles = [
+        {
+          id: 1,
+          theme: "edm",
+          universe: "Enigma do Medo",
+          title: "Primeiro selo — o lugar que não existe",
+          intro:
+            "Eu escondi o primeiro fragmento atrás do começo da investigação.",
+          clue: "Sou o lugar onde a busca da Mia pelo pai começa. Sou tratado como um lugar que não existe. Se tu sabe onde tudo começa, já sabe o que escrever.",
+          answers: ["Perímetro", "Perimetro"],
+          hints: [
+            "É o lugar pra onde Mia vai com Agatha, Samuel e Lupi.",
+            "Começa com P e tem cara de nome de área isolada.",
+          ],
+          fragment: "feliz aniversário, porra",
+          sigil: "✦",
+          label: "o lugar que não existe",
+          icon: ghostIcon,
+          position: { x: "50%", y: "8%" },
+        },
+        {
+          id: 2,
+          theme: "hk",
+          universe: "Hollow Knight",
+          title: "Segundo selo — o reino enterrado",
+          intro:
+            "Esse eu amarrei num nome que qualquer um que desceu fundo demais vai lembrar.",
+          clue: "O cavaleiro não anda por uma cidade só. Ele atravessa um reino subterrâneo inteiro, velho, quebrado e cheio de restos do que já foi grandioso. Qual é o nome desse reino?",
+          answers: ["Hallownest", "Hallow Nest"],
+          hints: [
+            "Não é Dirtmouth. É tudo aquilo lá embaixo.",
+            "Termina com nest.",
+          ],
+          fragment: "no meio de gritaria, call aleatória e ideia torta",
+          sigil: "☾",
+          label: "o reino enterrado",
+          icon: swordIcon,
+          position: { x: "90%", y: "28%" },
+        },
+        {
+          id: 3,
+          theme: "nm",
+          universe: "Natal Macabro",
+          title: "Terceiro selo — o natal que deu merda",
+          intro:
+            "Esse aqui eu tranquei atrás de sangue, neve e trauma audiovisual.",
+          clue: "Seis antigos colegas resolvem passar as festas juntos e acabam entrando num lugar péssimo pra se ter espírito natalino. Qual é o nome do acampamento?",
+          answers: [
+            "Acampamento Lua da Benquerença",
+            "Lua da Benquerença",
+            "Lua da Benquerenca",
+            "Lua da Bemquerença",
+            "Acampamento Lua da Bemquerença",
+            "Acampamento Lua da Bemquerenca",
+            "Lua da Bemquerenca",
+          ],
+          hints: [
+            "Se tu lembrar de Lua da Benquerença, já basta.",
+            "Benquerença sem acento também vale.",
+          ],
+          fragment: "tu virou uma das constantes mais reais da minha vida",
+          sigil: "⟁",
+          label: "sangue, neve e caos",
+          icon: skullIcon,
+          position: { x: "82%", y: "87%" },
+        },
+        {
+          id: 4,
+          theme: "op",
+          universe: "Ordem Paranormal",
+          title: "Quarto selo — o elemento que sobra no escuro",
+          intro:
+            "Esse eu nem precisei esconder tanto, porque tu ia acertar de qualquer jeito.",
+          clue: "Sangue. Morte. Conhecimento. Energia. Falta um. Qual é o quinto elemento do Outro Lado?",
+          answers: ["Medo"],
+          hints: ["É o mais misterioso dos cinco.", "Quatro letras."],
+          fragment: "tu é meu irmão de verdade, dos que eu levo pra vida",
+          sigil: "◈",
+          label: "o quinto elemento",
+          icon: eyeIcon,
+          position: { x: "18%", y: "87%" },
+        },
+        {
+          id: 5,
+          theme: "us",
+          universe: "Nós dois",
+          title: "Quinto selo — memória específica demais",
+          intro: "O último eu deixei só pra quem viveu isso comigo.",
+          clue: "Em 14/05/24 eu mandei: “Que cor eu sou?”. Qual foi a tua resposta exata?",
+          answers: [
+            "Cinza/amarelo escuro",
+            "Cinza amarelo escuro",
+            "Cinzaamareloescuro",
+          ],
+          hints: ["Tem duas cores, não uma só.", "Começa com cinza."],
+          fragment: "e eu ainda quero viver muita coisa foda contigo",
+          sigil: "✶",
+          label: "a nossa memória ridícula",
+          icon: heartIcon,
+          position: { x: "10%", y: "28%" },
+        },
+      ];
+
+      const finalLines = [
+        "irmão",
+        "",
+        "feliz aniversário porra KKKKKKK",
+        "",
+        "eu queria fazer um texto bonitinho e tals",
+        "mas a verdade é que contigo nunca funciona assim",
+        "é sempre um dos dois berrando, suas ideia torta, boboquices entre irmões (HEHEHEHEHE), “QUE?”, “COMO?”, “caralho”, e alguma putaria as vez lol kk",
+        "",
+        "e sinceramente?",
+        "ainda bem",
+        "",
+        "pq no meio de toda essa bagunça de ANOS",
+        "tu virou um dos caras mais importantes da minha vida, senão O CARA MAIS IMPORTANTE",
+        "mesmo com fase estranha, sumiço, reconciliação e os krl",
+        "tu continua sendo meu irmão",
+        "",
+        "e não tô falando “irmão” de enfeite",
+        "tô falando de alguém que eu levo pra vida msm",
+        "",
+        "então é isso diguinho",
+        "te desejo muita coisa foda",
+        "muito momento bom",
+        "muita risada",
+        "e que tu continue sendo esse maluco incrível que tu é",
+        "",
+        "te amo meu bro. feliz aniversário 🫶",
+      ];
+
+      const state = {
+        solved: new Set(),
+        hints: Object.fromEntries(puzzles.map((p) => [p.id, 0])),
+      };
+
+      const ritualBoard = document.getElementById("ritualBoard");
+      const miniStrip = document.getElementById("miniStrip");
+      const puzzleGrid = document.getElementById("puzzleGrid");
+      const solvedCounter = document.getElementById("solvedCounter");
+      const progressFill = document.getElementById("progressFill");
+      const finalOverlay = document.getElementById("finalOverlay");
+      const messageLines = document.getElementById("messageLines");
+      const overlayRitual = document.getElementById("overlayRitual");
+
+      function normalize(value) {
+        return value
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-zA-Z0-9]/g, "")
+          .toLowerCase()
+          .trim();
+      }
+
+      function isSolved(id) {
+        return state.solved.has(id);
+      }
+
+      function isUnlocked(index) {
+        if (index === 0) return true;
+        return isSolved(puzzles[index - 1].id) || isSolved(puzzles[index].id);
+      }
+
+      function solvedCount() {
+        return state.solved.size;
+      }
+
+      function renderBoard() {
+        ritualBoard.innerHTML = `
+        <div class="ring"></div>
+        <div class="ring-rev"></div>
+        <div class="ring-mid"></div>
+        <div class="ritual-line h"></div>
+        <div class="ritual-line v"></div>
+        <div class="ritual-line d1"></div>
+        <div class="ritual-line d2"></div>
+        <div class="ritual-core">
+          <div class="core-kicker">ritual do mano</div>
+          <div class="core-value">${solvedCount()}/5</div>
+          <div class="core-sub">Cada resposta encaixa num símbolo e puxa um pedaço do texto final.</div>
+        </div>
+        ${puzzles
+          .map(
+            (p) => `
+          <div class="ritual-node theme-${p.theme} ${isSolved(p.id) ? "solved" : ""}" style="--x:${p.position.x}; --y:${p.position.y};">
+            <div class="node-orb">
+              <div class="node-sigil">${p.sigil}</div>
+              <div class="node-icon">${p.icon()}</div>
+              <div class="node-ok">ok</div>
+            </div>
+            <div class="node-universe">${escapeHtml(p.universe)}</div>
+            <div class="${isSolved(p.id) ? "node-fragment" : "node-label"}">${escapeHtml(isSolved(p.id) ? p.fragment : p.label)}</div>
+          </div>
+        `,
+          )
+          .join("")}
+        <div class="echoes ${solvedCount() > 0 ? "visible" : ""}">
+          <div class="echoes-title">ecos do ritual</div>
+          <div class="echoes-text">${escapeHtml(
+            puzzles
+              .filter((p) => isSolved(p.id))
+              .map((p) => p.fragment)
+              .join(" • "),
+          )}</div>
+        </div>
+      `;
+      }
+
+      function renderMiniStrip() {
+        miniStrip.innerHTML = puzzles
+          .map(
+            (p) => `
+        <div class="mini-card theme-${p.theme}">
+          <div class="mini-bg"></div>
+          <div class="mini-inner">
+            <div class="mini-icon">
+              <span>${p.sigil}</span>
+              ${p.icon()}
+            </div>
+            <div style="min-width:0;">
+              <div class="mini-kicker">${escapeHtml(p.universe)}</div>
+              <div class="mini-text">${escapeHtml(isSolved(p.id) ? "selo fechado" : p.label)}</div>
+            </div>
+          </div>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      function renderCards() {
+        puzzleGrid.innerHTML = puzzles
+          .map((p, index) => {
+            const unlocked = isUnlocked(index);
+            const solved = isSolved(p.id);
+            const hintCount = state.hints[p.id];
+            const hintText =
+              hintCount > 0
+                ? p.hints[Math.min(hintCount - 1, p.hints.length - 1)]
+                : "";
+            return `
+          <article class="card theme-${p.theme} ${unlocked ? "" : "locked"}" data-id="${p.id}">
+            <div class="card-bg"></div>
+            <div class="card-header">
+              <div>
+                <div class="card-kicker">${escapeHtml(p.universe)}</div>
+                <h3 class="card-title">${escapeHtml(p.title)}</h3>
+                <p class="card-sub">${escapeHtml(p.intro)}</p>
+              </div>
+              <div class="card-icon-wrap">
+                <span>${p.sigil}</span>
+                ${p.icon()}
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="clue">${escapeHtml(p.clue)}</div>
+
+              ${!unlocked && !solved ? `<div class="lock-msg" style="margin-top:16px;"><span class="ritual-symbol">✖</span><span>Antes disso, tu precisa fechar o selo anterior.</span></div>` : ""}
+
+              <div class="solved-box ${solved ? "visible" : ""}" style="margin-top:16px;">
+                <div class="solved-kicker"><span class="ritual-symbol">✦</span><span>símbolo encaixado</span></div>
+                <div class="solved-fragment">“${escapeHtml(p.fragment)}”</div>
+              </div>
+
+              ${
+                unlocked && !solved
+                  ? `
+                <div class="actions">
+                  <div class="answer-row">
+                    <input class="input" type="text" data-answer-input="${p.id}" placeholder="escreve a resposta aqui" autocomplete="off" />
+                    <button class="btn primary" data-solve="${p.id}">encaixar símbolo</button>
+                  </div>
+                  <div class="hint-row">
+                    <button class="btn" data-hint="${p.id}">puxar dica</button>
+                    <div class="hint-box ${hintCount > 0 ? "visible" : ""}" data-hint-box="${p.id}">${escapeHtml(hintText)}</div>
+                  </div>
+                  <div class="error-box" data-error="${p.id}"></div>
+                </div>
+              `
+                  : ""
+              }
+            </div>
+          </article>
+        `;
+          })
+          .join("");
+
+        puzzleGrid.querySelectorAll("[data-solve]").forEach((button) => {
+          button.addEventListener("click", () =>
+            trySolve(Number(button.getAttribute("data-solve"))),
+          );
+        });
+
+        puzzleGrid.querySelectorAll("[data-answer-input]").forEach((input) => {
+          input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+              trySolve(Number(input.getAttribute("data-answer-input")));
+            }
+          });
+        });
+
+        puzzleGrid.querySelectorAll("[data-hint]").forEach((button) => {
+          button.addEventListener("click", () =>
+            revealHint(Number(button.getAttribute("data-hint"))),
+          );
+        });
+      }
+
+      function updateSummary() {
+        solvedCounter.textContent = `${solvedCount()}/5`;
+        progressFill.style.width = `${(solvedCount() / puzzles.length) * 100}%`;
+      }
+
+      function renderAll() {
+        updateSummary();
+        renderBoard();
+        renderMiniStrip();
+        renderCards();
+        if (solvedCount() === puzzles.length) {
+          openFinal();
+        } else {
+          closeFinal();
+        }
+      }
+
+      function revealHint(id) {
+        const puzzle = puzzles.find((p) => p.id === id);
+        if (!puzzle || isSolved(id)) return;
+        state.hints[id] = Math.min(state.hints[id] + 1, puzzle.hints.length);
+        renderCards();
+      }
+
+      function trySolve(id) {
+        const puzzle = puzzles.find((p) => p.id === id);
+        if (!puzzle || isSolved(id)) return;
+        const index = puzzles.findIndex((p) => p.id === id);
+        if (!isUnlocked(index)) return;
+
+        const input = puzzleGrid.querySelector(`[data-answer-input="${id}"]`);
+        const errorBox = puzzleGrid.querySelector(`[data-error="${id}"]`);
+        const user = normalize(input?.value || "");
+        const correct = puzzle.answers.some(
+          (answer) => normalize(answer) === user,
+        );
+
+        if (correct) {
+          state.solved.add(id);
+          renderAll();
+          return;
+        }
+
+        if (errorBox) {
+          errorBox.textContent = "Errado. O símbolo não fechou ainda.";
+          errorBox.classList.add("visible");
+        }
+      }
+
+      function resetAll() {
+        state.solved = new Set();
+        state.hints = Object.fromEntries(puzzles.map((p) => [p.id, 0]));
+        renderAll();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function closeFinal() {
+        finalOverlay.classList.remove("visible");
+        finalOverlay.setAttribute("aria-hidden", "true");
+      }
+
+      function openFinal() {
+        if (finalOverlay.classList.contains("visible")) return;
+        finalOverlay.classList.add("visible");
+        finalOverlay.setAttribute("aria-hidden", "false");
+        renderFinalLines();
+        spawnBursts();
+      }
+
+      function renderFinalLines() {
+        messageLines.innerHTML = "";
+        finalLines.forEach((line, index) => {
+          const el = document.createElement("div");
+          el.className = `message-line${line === "" ? " spacer" : ""}`;
+          el.textContent = line;
+          el.style.animationDelay = `${0.12 * index + 0.35}s`;
+          messageLines.appendChild(el);
+        });
+      }
+
+      function spawnBursts() {
+        overlayRitual
+          .querySelectorAll(".burst")
+          .forEach((node) => node.remove());
+        const total = 10;
+        const radius = Math.min(window.innerWidth * 0.24, 230);
+        for (let i = 0; i < total; i++) {
+          const angle = (Math.PI * 2 * i) / total;
+          const burst = document.createElement("div");
+          burst.className = "burst";
+          burst.style.setProperty("--dx", `${Math.cos(angle) * radius}px`);
+          burst.style.setProperty("--dy", `${Math.sin(angle) * radius}px`);
+          burst.style.animationDelay = `${i * 0.1}s`;
+          overlayRitual.appendChild(burst);
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function ghostIcon() {
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M12 2c4.4 0 8 3.6 8 8v10l-2.5-2-2.5 2-2.5-2-2.5 2-2.5-2L4 20V10c0-4.4 3.6-8 8-8z"/></svg>`;
+      }
+      function swordIcon() {
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5"/><path d="M13 6l5 5"/><path d="M4 20l6-6"/><path d="M11 13l7-7 2 2-7 7"/><path d="M8 16l-4 4"/></svg>`;
+      }
+      function skullIcon() {
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a8 8 0 0 0-8 8c0 2.2.9 4.2 2.3 5.7V20a1 1 0 0 0 1 1h2v-2h2v2h2v-2h2v2h2a1 1 0 0 0 1-1v-3.3A7.96 7.96 0 0 0 20 11a8 8 0 0 0-8-8z"/><path d="M9 11h.01"/><path d="M15 11h.01"/><path d="M10 15h4"/></svg>`;
+      }
+      function eyeIcon() {
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/></svg>`;
+      }
+      function heartIcon() {
+        return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.7-4.35-9.2-8.05C.8 9.95 2.05 6.5 5.5 6.5c2 0 3.35 1.15 4.1 2.3.75-1.15 2.1-2.3 4.1-2.3 3.45 0 4.7 3.45 2.7 6.45C18.7 16.65 12 21 12 21z"/></svg>`;
+      }
+
+      document.getElementById("resetBtn").addEventListener("click", resetAll);
+      document
+        .getElementById("overlayResetBtn")
+        .addEventListener("click", resetAll);
+      finalOverlay.addEventListener("click", (event) => {
+        if (event.target === finalOverlay) closeFinal();
+      });
+      window.addEventListener("resize", () => {
+        if (finalOverlay.classList.contains("visible")) spawnBursts();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (
+          event.key === "Escape" &&
+          finalOverlay.classList.contains("visible")
+        ) {
+          closeFinal();
+        }
+      });
+
+      renderAll();
+    </script>
+  </body>
+</html>
